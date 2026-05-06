@@ -1,32 +1,87 @@
 :root {
-    --primary: #2563eb;
-    --secondary: #64748b;
-    --bg: #f8fafc;
+    /* 1. ใช้สีเขียวแบบฉบับ LINE Official */
+    --primary: #06C755; 
+    --primary-dark: #05A346;
+    --secondary: #000000be;
+    --bg: #F2F2F2; /* 2. สีพื้นหลังเทาอ่อนแบบหน้าแชท LINE */
     --white: #ffffff;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* ใช้ฟอนต์ที่อิงตามระบบมือถือ iOS/Android จะดูเนียนตาที่สุด */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: var(--bg);
-    color: #1e293b;
+    color: #111111;
 }
 
+/* 3. ปรับ Header ให้เป็นสีขาวคลีนๆ เหมือนแถบเมนูใน LINE */
 header {
-    background: linear-gradient(135deg, var(--primary), #1e40af);
-    color: white;
-    padding: 2rem 1rem;
+    background: var(--white);
+    padding: 1.5rem 1rem 1rem;
     text-align: center;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-bottom: 1px solid #E5E5E5; /* เส้นคั่นบางๆ */
+    position: relative;
 }
 
-.container {
-    max-width: 600px;
-    margin: -1.5rem auto 2rem;
-    padding: 0 1rem;
+/* เอาเงาและกล่องขาวรอบโลโก้ออก ให้มันเนียนไปกับ Header สีขาว */
+.logo-container {
+    background: transparent;
+    display: inline-block;
+    padding: 0;
+    margin-bottom: 5px;
+    box-shadow: none;
 }
+
+.logo {
+    max-width: 90px; /* ปรับขนาดให้พองามแบบแอป */
+    display: block;
+    margin: 0 auto;
+}
+
+#langToggleBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #06C755; /* ใส่สีเขียว LINE แบบตายตัว 100% */
+    color: #ffffff; /* ตัวหนังสือสีขาว */
+    border: none; /* เอาเส้นขอบออก */
+    padding: 8px 16px; /* ขยายปุ่มให้ใหญ่ขึ้นนิดนึงให้กดง่าย */
+    border-radius: 20px; /* ขอบมนสวยๆ */
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 0.9rem;
+    z-index: 999; /* ดันให้อยู่ชั้นบนสุดแบบไม่ต้องสงสัย */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* เพิ่มเงาให้ปุ่มดูลอยขึ้นมา */
+}
+
+#langToggleBtn:hover {
+    background-color: #05A346; /* เวลากดหรือเอาเมาส์ชี้ สีจะเข้มขึ้นนิดนึง */
+}
+
+header h1 {
+    font-size: 1.3rem;
+    margin: 10px 0 5px;
+    color: #111;
+}
+
+header p {
+    color: var(--secondary);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* ขยับกล่องเมนูให้พอดีกับ Header สไตล์คลีนๆ */
+.container { 
+    max-width: 600px; 
+    margin: 1.5rem auto 2rem; 
+    padding: 0 1rem; 
+    position: relative; 
+    z-index: 10; 
+}
+
 
 .selection-menu {
     display: grid;
@@ -40,7 +95,7 @@ header {
     border: none;
     padding: 1rem 0.5rem;
     border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: 0.3s;
     display: flex;
@@ -50,8 +105,14 @@ header {
     color: var(--secondary);
 }
 
-.menu-btn i { font-size: 1.5rem; }
-.menu-btn span { font-size: 0.9rem; font-weight: bold; }
+.menu-btn i {
+    font-size: 1.5rem;
+}
+
+.menu-btn span {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
 
 .menu-btn.active {
     background: var(--primary);
@@ -62,40 +123,89 @@ header {
     background: var(--white);
     border-radius: 15px;
     padding: 1.5rem;
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     min-height: 300px;
 }
 
 .route-step {
     margin-bottom: 1rem;
     padding-left: 1rem;
-    border-left: 3px solid #e2e8f0;
+    border-left: 3px solid #bbf7d0;
+    /* เส้นคั่นสเต็ปสีเขียวอ่อน */
 }
 
-.img-thumbnail {
+/* --------- ระบบสไลด์รูปภาพ --------- */
+.slider-container {
+    position: relative;
     width: 100%;
     border-radius: 8px;
-    margin-top: 10px;
+    overflow: hidden;
+    margin-top: 15px;
+    background: #f1f5f9;
+}
+
+.slider-img {
+    width: 100%;
+    display: none;
+    /* ซ่อนรูปไว้ก่อน */
+    aspect-ratio: 4/3;
+    object-fit: contain;
     cursor: pointer;
+}
+
+.slider-img.active {
+    display: block;
+    /* แสดงเฉพาะรูปที่เลือก */
+}
+
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1.2rem;
     transition: 0.3s;
 }
 
-.img-thumbnail:hover { opacity: 0.8; }
-
-.btn-maps {
-    display: block;
-    width: 100%;
-    background: #059669;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 2rem;
+.slider-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
 }
 
-/* Modal Style */
+.slider-btn.prev {
+    left: 10px;
+}
+
+.slider-btn.next {
+    right: 10px;
+}
+
+.slider-dots {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.dot {
+    height: 10px;
+    width: 10px;
+    margin: 0 5px;
+    background-color: #cbd5e1;
+    border-radius: 50%;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.dot.active {
+    background-color: var(--primary);
+}
+
+/* --------------------------------- */
+
+
 .modal {
     display: none;
     position: fixed;
@@ -105,7 +215,7 @@ header {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(0, 0, 0, 0.9);
 }
 
 .modal-content {
@@ -125,4 +235,22 @@ header {
     cursor: pointer;
 }
 
-footer { text-align: center; padding: 2rem; color: #94a3b8; font-size: 0.8rem; }
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+    font-size: 1.2rem;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: #94a3b8;
+    font-size: 0.8rem;
+}
+
