@@ -7,7 +7,7 @@ const travelData = {
             "2. เลี้ยวซ้ายเข้าซอย 5 (สังเกตตึกสีฟ้า)",
             "3. ตรงเข้าสุดซอย ที่จอดรถอยู่ซ้ายมือ"
         ],
-        image: "https://via.placeholder.com/600x400?text=Car+Parking+Map", // เปลี่ยนเป็นลิงก์รูปจริงของคุณ
+        image: "images/stap1.jpg", // เปลี่ยนเป็นลิงก์รูปจริงของคุณ
         map: "https://goo.gl/maps/xxxx"
     },
     bike: {
