@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>วิธีการเดินทาง - Travel Guide</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <h1><i class="fa-solid fa-map-location-dot"></i> วิธีการเดินทาง</h1>
+        <p>เลือกประเภทการเดินทางของคุณ</p>
+    </header>
+
+    <main class="container">
+        <nav class="selection-menu">
+            <button class="menu-btn active" onclick="showContent('car', this)">
+                <i class="fa-solid fa-car"></i><span>รถยนต์</span>
+            </button>
+            <button class="menu-btn" onclick="showContent('bike', this)">
+                <i class="fa-solid fa-motorcycle"></i><span>มอเตอร์ไซค์</span>
+            </button>
+            <button class="menu-btn" onclick="showContent('walk', this)">
+                <i class="fa-solid fa-person-walking"></i><span>เดินเท้า</span>
+            </button>
+        </nav>
+
+        <section id="content-display" class="content-card">
+            <div id="content-body">
+                </div>
+        </section>
+    </main>
+
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="imgFull">
+        <div id="caption"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Travel Guide Integration</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
