@@ -1,200 +1,207 @@
-// ตัวแปรควบคุมภาษา (เริ่มต้นที่ภาษาไทย)
 let currentLang = 'th';
-// ตัวแปรจำว่าตอนนี้ดูเมนูไหนอยู่
-let currentType = 'car';
+let currentCategory = 'car';
+let slideIndex = 0;
+let currentSliderImages = []; // เก็บรูปรวมของหมวดนั้นๆ ไว้ใช้กับ Modal
+let currentModalImageIndex = 0; // เก็บตำแหน่งรูปปัจจุบันใน Modal
 
-// ----------------------------------------
-// 1. คลังคำศัพท์สำหรับหน้าจอ UI ทั่วไป
-// ----------------------------------------
-const uiDict = {
+// ข้อมูล UI และคำแปลพื้นฐาน
+const uiData = {
     th: {
-        title: "วิธีการเดินทาง",
-        subtitle: "เลือกประเภทการเดินทางของคุณ",
-        menuCar: "รถยนต์",
-        menuBike: "มอเตอร์ไซค์",
-        menuWalk: "เดินเท้า",
-        footer: "&copy; 2026 JJ MALL - Shower Room Services",
-        clickExpand: "(คลิกที่รูปเพื่อขยาย)"
+        title: "การเดินทางมายังจุดบริการ",
+        subtitle: "บริการห้องอาบน้ำ",
+        btnCar: "รถยนต์",
+        btnBike: "มอเตอร์ไซค์",
+        btnWalk: "เดินเท้า",
+        clickExpand: "คลิกรูปเพื่อขยาย"
     },
     en: {
-        title: "Directions",
-        subtitle: "Select your transportation mode",
-        menuCar: "Car",
-        menuBike: "Motorcycle",
-        menuWalk: "Walk",
-        footer: "&copy; 2026 JJ MALL - Shower Room Services",
-        clickExpand: "(Click image to expand)"
+        title: "Directions to Service Point",
+        subtitle: "Shower Room Services",
+        btnCar: "Car",
+        btnBike: "Motorcycle",
+        btnWalk: "Walk",
+        clickExpand: "Click image to enlarge"
     }
 };
 
-// ----------------------------------------
-// 2. ข้อมูลการเดินทาง (แยก 2 ภาษา)
-// ----------------------------------------
+// ข้อมูลการเดินทาง (ไม่มีขั้นตอนตัวเลขแล้ว เน้นคำอธิบายชัดเจน)
 const travelData = {
     car: {
-        images: ["images/step1.jpg", "images/step.jpg"],
+        // *** อย่าลืมเปลี่ยนชื่อไฟล์รูปให้ตรงกับที่มีในโฟลเดอร์ images ของคุณนะครับ ***
+        images: ["images/step1.jpg", "images/step1.jpg"], 
         th: {
             title: "เดินทางด้วยรถยนต์ส่วนตัว",
-            // ใช้ <i> </i> คร่อมส่วนที่ต้องการให้เอียง
-            desc: "จอดรถที่ลานจอดชั้น 3 และติดต่อแสตมป์บัตรได้ที่ประชาสัมพันธ์ ชั้น 1 <i>(เฉพาะผู้ใช้บริการห้องอาบน้ำ)</i>",
-            steps: [
-                "1. จอดรถ ณ ลานจอดรถชั้น 3",
-                "2. ติดต่อประชาสัมพันธ์ ชั้น 1 เพื่อรับสิทธิ์ <b>จอดฟรี 1 ชม.</b>",
-                "<i>กรุณาแสดงใบเสร็จหรือหลักฐานการใช้บริการ</i>"
-            ]
+            desc: "จอดรถที่ลานจอด <b>ชั้น 3</b> และติดต่อแสตมป์บัตรได้ที่ประชาสัมพันธ์ <b>ชั้น 1</b> <i>(สิทธิ์จอดฟรี 1 ชม. เฉพาะผู้ใช้บริการห้องอาบน้ำ)</i>"
         },
         en: {
             title: "By Private Car",
-            desc: "Park on Level 3 and validate your ticket at the Info Counter <i>(Shower service customers only)</i>",
-            steps: [
-                "1. Park on Level 3",
-                "2. Visit Information Counter on 1st Floor for <b>1-hour free parking</b>",
-                "<i>Please show your service receipt</i>"
-            ]
+            desc: "Park on <b>Level 3</b> and validate your ticket at the <b>1st Floor Information Counter</b> <i>(1-hour free parking for shower service customers)</i>"
         }
     },
     bike: {
-        images: ["images/bike_step1.jpg", "images/bike_step2.jpg"], 
+        images: ["images/step1.jpg", "images/step1.jpg"], 
         th: {
             title: "เดินทางด้วยรถมอเตอร์ไซค์",
-            desc: "จอดรถที่จุดจอดรถจักรยานยนต์ประตู 3 และติดต่อแสตมป์บัตรได้ที่ประชาสัมพันธ์ ชั้น 1",
-            steps: [
-                "1. จอดรถ ณ จุดจอดรถจักรยานยนต์ <b>ประตู 3</b>",
-                "2. นำบัตรจอดรถมาติดต่อที่ <b>เคาน์เตอร์ประชาสัมพันธ์ ชั้น 1</b>",
-                "<i>รับสิทธิ์จอดฟรี 1 ชม. (เฉพาะลูกค้าที่ใช้บริการห้องอาบน้ำ)</i>"
-            ]
+            desc: "จอดรถที่จุดจอดรถจักรยานยนต์ <b>ประตู 3</b> และนำบัตรจอดรถมาติดต่อที่ <b>เคาน์เตอร์ประชาสัมพันธ์ ชั้น 1</b> <i>(รับสิทธิ์จอดฟรี 1 ชม.)</i>"
         },
         en: {
             title: "By Motorcycle",
-            desc: "Park at Gate 3 and validate your ticket at the 1st Floor Information Counter.",
-            steps: [
-                "1. Park at <b>Gate 3</b> motorcycle parking area",
-                "2. Visit <b>Information Counter (1st Floor)</b>",
-                "<i>1-hour free parking for shower service customers only</i>"
-            ]
+            desc: "Park at <b>Gate 3</b> motorcycle parking area and visit the <b>Information Counter (1st Floor)</b> <i>(1-hour free parking)</i>"
         }
     },
     walk: {
-        images: ["images/walk_step1.jpg", "images/walk_step2.jpg"], 
+        images: ["images/step1.jpg", "images/step1.jpg"], 
         th: {
             title: "เดินทางเท้า / รถสาธารณะ",
-            desc: "เดินทางเข้า JJ MALL ได้ทุกประตู",
-            steps: [
-                "ติดต่อเจ้าหน้าที่ ณ <b>เคาน์เตอร์ประชาสัมพันธ์ ชั้น 1</b> เพื่อสอบถามจุดบริการ",
-                "<i>เปิดให้บริการสำหรับลูกค้า Walk-in ทุกท่านที่ต้องการใช้บริการห้องอาบน้ำ</i>"
-            ]
+            desc: "เดินทางเข้าอาคารผ่าน <b>ทางเข้าหลัก</b> และติดต่อสอบถามจุดบริการได้ที่ <b>เคาน์เตอร์ประชาสัมพันธ์ ชั้น 1</b> <i>(เปิดให้บริการสำหรับลูกค้า Walk-in ทุกท่าน)</i>"
         },
         en: {
             title: "Walk-in / Public Transit",
-            desc: "Easy access from all main entrances. Head to the service point on the 1st Floor.",
-            steps: [
-                "Visit the <b>Information Counter (1st Floor)</b> for directions",
-                "<i>All Walk-in customers are welcome to use our shower facilities</i>"
-            ]
+            desc: "Enter through the <b>Main Entrance</b>. Visit the <b>Information Counter (1st Floor)</b> for directions. <i>(All Walk-in customers are welcome)</i>"
         }
     }
 };
 
-// ----------------------------------------
-// ระบบการทำงานต่างๆ
-// ----------------------------------------
-let currentImages = [];
-let currentSlideIndex = 0;
+// เริ่มต้นการทำงานเมื่อโหลดหน้าเว็บ
+document.addEventListener("DOMContentLoaded", () => {
+    updateStaticUI();
+    selectCategory('car'); // ค่าเริ่มต้นตอนเปิดมา
 
-function showContent(type, btn) {
-    currentType = type; // จำไว้ว่ากำลังดูรถยนต์ มอเตอร์ไซค์ หรือเดิน
+    // ปุ่มเปลี่ยนภาษา
+    document.getElementById('langToggleBtn').addEventListener('click', () => {
+        currentLang = currentLang === 'th' ? 'en' : 'th';
+        document.getElementById('langToggleBtn').innerText = currentLang === 'th' ? 'EN' : 'TH';
+        updateStaticUI();
+        selectCategory(currentCategory);
+    });
+});
 
-    // เปลี่ยนสีปุ่มเมนู
-    document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
-    if(btn) btn.classList.add('active');
-    else document.getElementById(`btn-${type}`).classList.add('active');
-
-    const data = travelData[type];
-    const langData = data[currentLang]; // ดึงข้อมูลตามภาษาปัจจุบัน
-    const ui = uiDict[currentLang]; // ดึงคำศัพท์ UI
-
-    currentImages = data.images;
-    currentSlideIndex = 0;
-
-    const container = document.getElementById('content-body');
-    let stepsHtml = langData.steps.map(s => `<p class="route-step">${s}</p>`).join('');
-
-    let sliderHtml = `
-        <div class="slider-container">
-            ${currentImages.map((img, index) => 
-                `<img src="${img}" class="slider-img ${index === 0 ? 'active' : ''}" onclick="openModal('${img}')">`
-            ).join('')}
-            ${currentImages.length > 1 ? `
-                <button class="slider-btn prev" onclick="changeSlide(-1)">&#10094;</button>
-                <button class="slider-btn next" onclick="changeSlide(1)">&#10095;</button>
-            ` : ''}
-        </div>
-        <div class="slider-dots">
-            ${currentImages.map((_, index) => `<span class="dot ${index === 0 ? 'active' : ''}"></span>`).join('')}
-        </div>
-    `;
-
-    container.innerHTML = `
-        <h2>${langData.title}</h2>
-        <p style="color: #64748b; margin-bottom: 20px;">${langData.desc}</p>
-        <div class="steps-container">${stepsHtml}</div>
-        ${sliderHtml}
-        <p style="font-size: 0.8rem; color: #94a3b8; text-align: center;">${ui.clickExpand}</p>
-    `;
-}
-
-// ฟังก์ชันสลับภาษา
-function toggleLanguage() {
-    // สลับค่าตัวแปร
-    currentLang = currentLang === 'th' ? 'en' : 'th';
-    
-    // เปลี่ยนข้อความบนปุ่ม (ถ้าเป็น th ให้ปุ่มโชว์ EN เพื่อกดสลับ)
-    document.getElementById('langToggleBtn').innerText = currentLang === 'th' ? 'EN' : 'TH';
-    
-    // อัปเดตข้อความ UI ส่วนนอก (Header, Menu, Footer)
-    const ui = uiDict[currentLang];
+// อัปเดตข้อความทั่วไปตามภาษาที่เลือก
+function updateStaticUI() {
+    const ui = uiData[currentLang];
     document.getElementById('ui-title').innerText = ui.title;
     document.getElementById('ui-subtitle').innerText = ui.subtitle;
-    document.getElementById('ui-menu-car').innerText = ui.menuCar;
-    document.getElementById('ui-menu-bike').innerText = ui.menuBike;
-    document.getElementById('ui-menu-walk').innerText = ui.menuWalk;
-    document.getElementById('ui-footer').innerHTML = ui.footer;
-
-    // อัปเดตเนื้อหาตรงกลางใหม่ให้เป็นภาษาที่เลือก
-    showContent(currentType, document.getElementById(`btn-${currentType}`));
+    document.getElementById('txt-car').innerText = ui.btnCar;
+    document.getElementById('txt-bike').innerText = ui.btnBike;
+    document.getElementById('txt-walk').innerText = ui.btnWalk;
 }
 
-// ฟังก์ชันควบคุมสไลด์และ Modal คงเดิม
-function changeSlide(n) {
-    currentSlideIndex += n;
-    if (currentSlideIndex >= currentImages.length) { currentSlideIndex = 0; }
-    if (currentSlideIndex < 0) { currentSlideIndex = currentImages.length - 1; }
-    updateSliderUI();
-}
+// เลือกหมวดหมู่การเดินทาง
+function selectCategory(category) {
+    currentCategory = category;
+    
+    // เปลี่ยนสีปุ่มเมนู
+    document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(`btn-${category}`).classList.add('active');
 
-function updateSliderUI() {
-    const imgs = document.querySelectorAll('.slider-img');
-    const dots = document.querySelectorAll('.dot');
-    imgs.forEach(img => img.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-    if(imgs.length > 0) {
-        imgs[currentSlideIndex].classList.add('active');
-        dots[currentSlideIndex].classList.add('active');
+    const data = travelData[category];
+    const isEn = (currentLang === 'en');
+    const langData = isEn ? data.en : data.th;
+    const ui = uiData[currentLang];
+    const container = document.getElementById('content-container');
+
+    // อัปเดตตัวแปรรูปรวมของหมวดนี้
+    currentSliderImages = data.images;
+
+    // สร้างระบบสไลด์รูปภาพ
+    let sliderHtml = '';
+    if (data.images && data.images.length > 0) {
+        const imagesHtml = data.images.map((img, index) => 
+            `<img src="${img}" class="slider-img" onclick="openModal(${index})">`
+        ).join('');
+        
+        let dotsHtml = '';
+        if(data.images.length > 1){
+            dotsHtml = `<div class="slider-dots">` + 
+                       data.images.map((_, index) => `<span class="dot" onclick="currentSlide(${index})"></span>`).join('') +
+                       `</div>`;
+            
+            sliderHtml = `
+                <div class="slider-container">
+                    ${imagesHtml}
+                    <button class="slider-btn prev" onclick="changeSlide(-1)">&#10094;</button>
+                    <button class="slider-btn next" onclick="changeSlide(1)">&#10095;</button>
+                </div>
+                ${dotsHtml}
+            `;
+        } else {
+             sliderHtml = `
+                <div class="slider-container">
+                    ${imagesHtml}
+                </div>
+            `;
+        }
+    }
+
+    // เอาเนื้อหาใส่ในหน้าเว็บ (เอา list steps ออกแล้ว)
+    container.innerHTML = `
+        <h2>${langData.title}</h2>
+        <p style="color: #64748b; margin-bottom: 20px; line-height: 1.6;">${langData.desc}</p>
+        ${sliderHtml}
+        <p style="font-size: 0.8rem; color: #94a3b8; text-align: center; margin-top: 10px;">${ui.clickExpand}</p>
+    `;
+
+    slideIndex = 0;
+    if (data.images && data.images.length > 0) {
+        showSlide(slideIndex);
     }
 }
 
-function openModal(src) {
-    const modal = document.getElementById("imageModal");
-    const modalImg = document.getElementById("imgFull");
+// --------- ระบบสไลด์รูปภาพในหน้าปกติ ---------
+function changeSlide(n) {
+    showSlide(slideIndex += n);
+}
+
+function currentSlide(n) {
+    showSlide(slideIndex = n);
+}
+
+function showSlide(n) {
+    const slides = document.getElementsByClassName("slider-img");
+    const dots = document.getElementsByClassName("dot");
+    
+    if (slides.length === 0) return;
+
+    if (n >= slides.length) { slideIndex = 0; }
+    if (n < 0) { slideIndex = slides.length - 1; }
+
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove("active");
+    }
+    for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove("active");
+    }
+
+    slides[slideIndex].classList.add("active");
+    if(dots.length > 0) {
+        dots[slideIndex].classList.add("active");
+    }
+}
+
+// --------- ระบบสไลด์รูประหว่างซูม (Modal) ---------
+function openModal(index) {
+    if (!currentSliderImages || currentSliderImages.length === 0) return;
+    
+    currentModalImageIndex = index;
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('img01');
+    
     modal.style.display = "block";
-    modalImg.src = src;
+    modalImg.src = currentSliderImages[currentModalImageIndex];
 }
 
 function closeModal() {
-    document.getElementById("imageModal").style.display = "none";
+    document.getElementById('imageModal').style.display = "none";
 }
 
-// เริ่มต้นทำงานเมื่อโหลดเว็บเสร็จ
-window.onload = () => {
-    showContent('car', document.getElementById('btn-car'));
-};
+function changeModalImage(direction) {
+    currentModalImageIndex += direction;
+
+    if (currentModalImageIndex < 0) {
+        currentModalImageIndex = currentSliderImages.length - 1; // วนกลับไปรูปสุดท้าย
+    } else if (currentModalImageIndex >= currentSliderImages.length) {
+        currentModalImageIndex = 0; // วนกลับมารูปแรก
+    }
+
+    document.getElementById('img01').src = currentSliderImages[currentModalImageIndex];
+}

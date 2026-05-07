@@ -1,14 +1,13 @@
 :root {
-    /* 1. ใช้สีเขียวแบบฉบับ LINE Official */
+    /* ใช้สีเขียวแบบฉบับ LINE Official */
     --primary: #06C755; 
     --primary-dark: #05A346;
-    --secondary: #000000be;
-    --bg: #F2F2F2; /* 2. สีพื้นหลังเทาอ่อนแบบหน้าแชท LINE */
+    --secondary: #8b96a5;
+    --bg: #F2F2F2; /* สีพื้นหลังเทาอ่อนแบบหน้าแชท LINE */
     --white: #ffffff;
 }
 
 body {
-    /* ใช้ฟอนต์ที่อิงตามระบบมือถือ iOS/Android จะดูเนียนตาที่สุด */
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -16,16 +15,15 @@ body {
     color: #111111;
 }
 
-/* 3. ปรับ Header ให้เป็นสีขาวคลีนๆ เหมือนแถบเมนูใน LINE */
 header {
     background: var(--white);
     padding: 1.5rem 1rem 1rem;
     text-align: center;
-    border-bottom: 1px solid #E5E5E5; /* เส้นคั่นบางๆ */
+    border-bottom: 1px solid #E5E5E5;
     position: relative;
+    z-index: 5;
 }
 
-/* เอาเงาและกล่องขาวรอบโลโก้ออก ให้มันเนียนไปกับ Header สีขาว */
 .logo-container {
     background: transparent;
     display: inline-block;
@@ -35,7 +33,7 @@ header {
 }
 
 .logo {
-    max-width: 90px; /* ปรับขนาดให้พองามแบบแอป */
+    max-width: 90px;
     display: block;
     margin: 0 auto;
 }
@@ -44,21 +42,21 @@ header {
     position: absolute;
     top: 20px;
     right: 20px;
-    background-color: #06C755; /* ใส่สีเขียว LINE แบบตายตัว 100% */
-    color: #ffffff; /* ตัวหนังสือสีขาว */
-    border: none; /* เอาเส้นขอบออก */
-    padding: 8px 16px; /* ขยายปุ่มให้ใหญ่ขึ้นนิดนึงให้กดง่าย */
-    border-radius: 20px; /* ขอบมนสวยๆ */
+    background-color: #06C755;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
     font-size: 0.9rem;
-    z-index: 999; /* ดันให้อยู่ชั้นบนสุดแบบไม่ต้องสงสัย */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* เพิ่มเงาให้ปุ่มดูลอยขึ้นมา */
+    z-index: 999;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 #langToggleBtn:hover {
-    background-color: #05A346; /* เวลากดหรือเอาเมาส์ชี้ สีจะเข้มขึ้นนิดนึง */
+    background-color: #05A346;
 }
 
 header h1 {
@@ -73,7 +71,6 @@ header p {
     margin: 0;
 }
 
-/* ขยับกล่องเมนูให้พอดีกับ Header สไตล์คลีนๆ */
 .container { 
     max-width: 600px; 
     margin: 1.5rem auto 2rem; 
@@ -81,7 +78,6 @@ header p {
     position: relative; 
     z-index: 10; 
 }
-
 
 .selection-menu {
     display: grid;
@@ -124,17 +120,10 @@ header p {
     border-radius: 15px;
     padding: 1.5rem;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    min-height: 300px;
+    min-height: 250px;
 }
 
-.route-step {
-    margin-bottom: 1rem;
-    padding-left: 1rem;
-    border-left: 3px solid #bbf7d0;
-    /* เส้นคั่นสเต็ปสีเขียวอ่อน */
-}
-
-/* --------- ระบบสไลด์รูปภาพ --------- */
+/* --------- ระบบสไลด์รูปภาพปกติ --------- */
 .slider-container {
     position: relative;
     width: 100%;
@@ -147,7 +136,6 @@ header p {
 .slider-img {
     width: 100%;
     display: none;
-    /* ซ่อนรูปไว้ก่อน */
     aspect-ratio: 4/3;
     object-fit: contain;
     cursor: pointer;
@@ -155,7 +143,6 @@ header p {
 
 .slider-img.active {
     display: block;
-    /* แสดงเฉพาะรูปที่เลือก */
 }
 
 .slider-btn {
@@ -196,6 +183,7 @@ header p {
     background-color: #cbd5e1;
     border-radius: 50%;
     display: inline-block;
+    cursor: pointer;
     transition: 0.3s;
 }
 
@@ -203,9 +191,7 @@ header p {
     background-color: var(--primary);
 }
 
-/* --------------------------------- */
-
-
+/* --------- Modal (โหมดดูรูปใหญ่) --------- */
 .modal {
     display: none;
     position: fixed;
@@ -233,18 +219,37 @@ header p {
     font-size: 40px;
     font-weight: bold;
     cursor: pointer;
+    z-index: 1001;
 }
 
-#caption {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-    text-align: center;
-    color: #ccc;
-    padding: 10px 0;
-    height: 150px;
-    font-size: 1.2rem;
+/* ปุ่มเลื่อนรูปใน Modal */
+.modal-btn {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    transition: 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    z-index: 1001;
+}
+
+.modal-prev {
+    left: 10px;
+    border-radius: 0 5px 5px 0;
+}
+
+.modal-next {
+    right: 10px;
+    border-radius: 5px 0 0 5px;
+}
+
+.modal-prev:hover, .modal-next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 footer {
@@ -253,4 +258,3 @@ footer {
     color: #94a3b8;
     font-size: 0.8rem;
 }
-
