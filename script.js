@@ -27,11 +27,18 @@ const uiData = {
 // ข้อมูลการเดินทาง (ไม่มีขั้นตอนตัวเลขแล้ว เน้นคำอธิบายชัดเจน)
 const travelData = {
     car: {
-        // *** อย่าลืมเปลี่ยนชื่อไฟล์รูปให้ตรงกับที่มีในโฟลเดอร์ images ของคุณนะครับ ***
-        images: ["images/step1.jpg", "images/step1.jpg"], 
+        images: ["images/C1.jpg", "images/C2.jpg", "images/T1.jpg", "images/T2.jpg", "images/T3.jpg", "images/T4.jpg", "images/T5.jpg"], 
         th: {
             title: "เดินทางด้วยรถยนต์ส่วนตัว",
-            desc: "จอดรถที่ลานจอด <b>ชั้น 3</b> และติดต่อแสตมป์บัตรได้ที่ประชาสัมพันธ์ <b>ชั้น 1</b> <i>(สิทธิ์จอดฟรี 1 ชม. เฉพาะผู้ใช้บริการห้องอาบน้ำ)</i>"
+            desc: [
+                "ขั้นที่ 1: จอดรถที่ลานจอดชั้น 3 จากนั้นเดินไปที่ลิฟต์ใหญ่เพื่อลงไปชั้น G ",
+                "ขั้นที่ 2: กดลิฟต์เพื่อลงไปชั้น G",
+                "ขั้นที่ 3: เมื่อลงมาถึงชั้น G แล้วจะเจอเคาท์เตอร์อยู่ตรงหน้า ให้ติดต่อเพื่อรับบริการห้องอาบน้ำได้เลย",
+                "ขั้นที่ 4: จากนั้นเดินเข้าห้างเพื่อไปยังห้องอาบน้ำ",
+                "ขั้นที่ 5: เลี้ยวขวา",
+                "ขั้นที่ 6: เดินตรงไปเรื่อยๆ",
+                "ขั้นที่ 7: เจอร้าน Forest แล้วให้เลี้ยงขวาจะเจอห้องอาบน้ำอยู่ตรงหน้า",                                                      
+            ]
         },
         en: {
             title: "By Private Car",
@@ -39,10 +46,25 @@ const travelData = {
         }
     },
     bike: {
-        images: ["images/step1.jpg", "images/step1.jpg"], 
+        images: ["images/M1.jpg", "images/M2.jpg", "images/M3.jpg", "images/M4.jpg", "images/M7.jpg", "images/M8.jpg", "images/M9.jpg", "images/M10.jpg", "images/M11.jpg", "images/T1.jpg", "images/T2.jpg", "images/T3.jpg", "images/T4.jpg", "images/T5.jpg"], 
         th: {
             title: "เดินทางด้วยรถมอเตอร์ไซค์",
-            desc: "จอดรถที่จุดจอดรถจักรยานยนต์ <b>ประตู 3</b> และนำบัตรจอดรถมาติดต่อที่ <b>เคาน์เตอร์ประชาสัมพันธ์ ชั้น 1</b> <i>(รับสิทธิ์จอดฟรี 1 ชม.)</i>"
+            desc: [
+                "ขั้นที่ 1: จอดที่ลานจอดมอเตอร์ไซค์ประตู 3 ",
+                "ขั้นที่ 2: เดินข้ามทางม้าลายมาฝั่งตลาดปลา",
+                "ขั้นที่ 3: เดินตรงไปเรื่อยๆ",         
+                "ขั้นที่ 4: แล้วเดินข้ามทางม้าลายเพื่อเข้าประตู 3",
+                "ขั้นที่ 5: เดินลงบันไดไปที่ชั้น G",
+                "ขั้นที่ 6: เดินตรงไปเรื่อยๆ",
+                "ขั้นที่ 7: จะเจอบรรไดเลื่อน",
+                "ขั้นที่ 8: เดินผ่านบรรไดเลื่อนแล้วเลี้ยวขวา",
+                "ขั้นที่ 9: แล้วจะเจอป้ายสัญลักษณ์ลิฟให้เลี้ยวซ้าย",
+                "ขั้นที่ 10: แล้วจะเจอเคาท์เตอร์ ให้ติดต่อเพื่อรับบริการห้องอาบน้ำได้เลย",
+                "ขั้นที่ 11: จากนั้นเดินเข้าห้างเพื่อไปยังห้องอาบน้ำ",
+                "ขั้นที่ 12: เลี้ยวขวา",
+                "ขั้นที่ 13: เดินตรงไปเรื่อยๆ",
+                "ขั้นที่ 14: เจอร้าน Forest แล้วให้เลี้ยงขวาจะเจอห้องอาบน้ำอยู่ตรงหน้า",
+            ]
         },
         en: {
             title: "By Motorcycle",
@@ -50,10 +72,25 @@ const travelData = {
         }
     },
     walk: {
-        images: ["images/step1.jpg", "images/step1.jpg"], 
+        images: [
+            "images/M4.jpg","images/M6.jpg","images/M7.jpg","images/M8.jpg","images/M9.jpg","images/M10.jpg","images/M11.jpg","images/T1.jpg", "images/T2.jpg", "images/T3.jpg", "images/T4.jpg", "images/T5.jpg"
+        ], 
         th: {
             title: "เดินทางเท้า / รถสาธารณะ",
-            desc: "เดินทางเข้าอาคารผ่าน <b>ทางเข้าหลัก</b> และติดต่อสอบถามจุดบริการได้ที่ <b>เคาน์เตอร์ประชาสัมพันธ์ ชั้น 1</b> <i>(เปิดให้บริการสำหรับลูกค้า Walk-in ทุกท่าน)</i>"
+            desc: [
+                "ขั้นที่ 1: เดินเข้าประตู 3",
+                "ขั้นที่ 2: สามารถเปิดเข้าไปได้เลย",
+                "ขั้นที่ 3: เดินลงบันไดไปที่ชั้น G",
+                "ขั้นที่ 4: เดินตรงไปเรื่อยๆ",
+                "ขั้นที่ 5: จะเจอบรรไดเลื่อน",
+                "ขั้นที่ 6: เดินผ่านบรรไดเลื่อนแล้วเลี้ยวขวา",
+                "ขั้นที่ 7: แล้วจะเจอป้ายสัญลักษณ์ลิฟให้เลี้ยวซ้าย",
+                "ขั้นที่ 8: แล้วจะเจอเคาท์เตอร์ ให้ติดต่อเพื่อรับบริการห้องอาบน้ำได้เลย",
+                "ขั้นที่ 9: จากนั้นเดินเข้าห้างเพื่อไปยังห้องอาบน้ำ",
+                "ขั้นที่ 10: เลี้ยวขวา",
+                "ขั้นที่ 11: เดินตรงไปเรื่อยๆ",
+                "ขั้นที่ 12: เจอร้าน Forest แล้วให้เลี้ยงขวาจะเจอห้องอาบน้ำอยู่ตรงหน้า"
+            ]
         },
         en: {
             title: "Walk-in / Public Transit",
@@ -134,9 +171,10 @@ function selectCategory(category) {
     }
 
     // เอาเนื้อหาใส่ในหน้าเว็บ (เอา list steps ออกแล้ว)
+    const descText = Array.isArray(langData.desc) ? langData.desc[0] : langData.desc;
     container.innerHTML = `
         <h2>${langData.title}</h2>
-        <p style="color: #64748b; margin-bottom: 20px; line-height: 1.6;">${langData.desc}</p>
+        <p id="slide-desc" style="color: #64748b; margin-bottom: 20px; line-height: 1.6;">${descText}</p>
         ${sliderHtml}
         <p style="font-size: 0.8rem; color: #94a3b8; text-align: center; margin-top: 10px;">${ui.clickExpand}</p>
     `;
@@ -175,6 +213,16 @@ function showSlide(n) {
     slides[slideIndex].classList.add("active");
     if(dots.length > 0) {
         dots[slideIndex].classList.add("active");
+    }
+
+    // อัปเดตข้อความตามรูปที่เลื่อน
+    const data = travelData[currentCategory];
+    const langData = currentLang === 'en' ? data.en : data.th;
+    if (Array.isArray(langData.desc) && slideIndex < langData.desc.length) {
+        const descElement = document.getElementById('slide-desc');
+        if (descElement) {
+            descElement.textContent = langData.desc[slideIndex];
+        }
     }
 }
 
